@@ -9,35 +9,36 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #1a1a1a, #333333); /* Dark gradient */
-            color: #f0f0f0; /* Light text for contrast */
+            background: linear-gradient(135deg, #007bff, #6f42c1);
+            color: #f8f9fa;
             display: flex;
             flex-direction: column;
             align-items: center;
             overflow-x: hidden;
         }
 
+        /* Smooth transitions for all */
+        * {
+            transition: all 0.3s ease;
+        }
+
         /* Navigation Bar */
         .navbar {
-            background-color: #222222; /* Solid dark background */
+            background-color: rgba(0, 0, 0, 0.7);
             color: white;
             display: flex;
             justify-content: space-around;
             padding: 15px;
             width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .navbar a {
-            color: #f0f0f0;
+            color: white;
             text-decoration: none;
             font-weight: bold;
-            font-size: 16px;
         }
         .navbar a:hover {
-            color: #ffd700; /* Gold hover effect */
+            color: #ffc107;
             text-decoration: underline;
         }
 
@@ -46,7 +47,7 @@
             display: none;
             padding: 20px;
             width: 100%;
-            max-width: 800px;
+            max-width: 600px;
             opacity: 0;
             transform: translateY(20px);
         }
@@ -56,12 +57,12 @@
             transform: translateY(0);
         }
 
-        /* Form Containers */
+        /* Form Container */
         .form-container, .card {
-            background-color: #2a2a2a; /* Dark container */
+            background-color: rgba(255, 255, 255, 0.1);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
             margin: 20px auto;
         }
 
@@ -70,16 +71,17 @@
             padding: 10px;
             margin: 10px 0;
             border-radius: 4px;
-            border: 1px solid #444444;
-            background-color: #1a1a1a;
-            color: #f0f0f0;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
         }
+
         input::placeholder, textarea::placeholder {
-            color: #777777;
+            color: #d6d6d6;
         }
 
         button {
-            background-color: #0066cc; /* Bright accent for buttons */
+            background-color: #28a745;
             color: white;
             border: none;
             padding: 10px;
@@ -89,7 +91,7 @@
             font-weight: bold;
         }
         button:hover {
-            background-color: #004d99;
+            background-color: #218838;
             transform: scale(1.05);
         }
 
@@ -103,12 +105,20 @@
             box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.4);
         }
 
-        /* Footer */
-        footer {
+        /* Pagination controls */
+        .pagination-controls {
             margin-top: 20px;
-            text-align: center;
-            color: #777777;
-            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .pagination-controls button {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -120,6 +130,7 @@
         <a href="#" onclick="showPage('events')">Events</a>
         <a href="#" onclick="showPage('contact')">Contact</a>
         <a href="#" onclick="showPage('admin')">Admin Dashboard</a>
+        <a href="#" onclick="showPage('superAdmin')">Super Admin Dashboard</a>
     </div>
 
     <!-- Home Page -->
@@ -134,63 +145,35 @@
             <input type="password" id="password" placeholder="Password" required>
             <button onclick="login()">Login</button>
         </div>
-
-        <!-- Suggestion Form -->
-        <div id="suggestionForm" class="form-container" style="display: none;">
-            <textarea id="suggestion" rows="4" placeholder="Write your suggestion here..."></textarea>
-            <button onclick="submitSuggestion()">Submit Suggestion</button>
-        </div>
-
-        <!-- User Suggestion History -->
-        <div id="userSuggestions" class="form-container" style="display: none;">
-            <h2>Your Submitted Suggestions</h2>
-            <div id="userSuggestionsList">
-                <p>No suggestions yet.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Events Page -->
-    <div id="events" class="page">
-        <h1>Upcoming Events</h1>
-        <div class="card">Event 1: Orientation Day - 10th Jan</div>
-        <div class="card">Event 2: Tech Summit - 15th Feb</div>
-        <div class="card">Event 3: Sports Week - 1st March</div>
-    </div>
-
-    <!-- Contact Page -->
-    <div id="contact" class="page">
-        <h1>Contact Us</h1>
-        <p>Email: campusadmin@example.com</p>
-        <p>Phone: +233 123 456 789</p>
-        <p>Address: Accra Technical University</p>
     </div>
 
     <!-- Admin Dashboard -->
     <div id="admin" class="page">
         <h1>Admin Dashboard</h1>
-        <p>Secure access required for this section.</p>
-        <button onclick="showAdmin()">Login as Admin</button>
-
-        <div id="adminView" style="display: none;">
-            <h2>User Details</h2>
-            <div id="userDetails">
-                <p>No users logged in yet.</p>
-            </div>
-            <h2>Suggestions</h2>
-            <div id="adminSuggestions">
-                <p>No suggestions yet.</p>
-            </div>
+        <div id="adminSuggestions">
+            <p>No suggestions yet.</p>
         </div>
     </div>
 
-    <footer>
-        &copy; 2024 Suggestion App. Built with 💖 by My Honeybyte.
-    </footer>
+    <!-- Super Admin Dashboard -->
+    <div id="superAdmin" class="page">
+        <h1>Super Admin Dashboard</h1>
+        <div id="superAdminControls">
+            <button onclick="manageAdmins()">Manage Admins</button>
+        </div>
+        <div id="superAdminSuggestions">
+            <p>No suggestions yet.</p>
+        </div>
+    </div>
 
     <script>
+        let currentUser = null;
         const users = [];
         const suggestions = [];
+        const admins = [
+            { username: "admin", password: "admin123", role: "Admin" },
+            { username: "superadmin", password: "super123", role: "SuperAdmin" },
+        ];
 
         // Navigation
         function showPage(pageId) {
@@ -200,63 +183,30 @@
 
         // Login
         function login() {
-            const indexNumber = document.getElementById('indexNumber').value;
-            const email = document.getElementById('email').value;
+            const username = document.getElementById('indexNumber').value;
             const password = document.getElementById('password').value;
+            const admin = admins.find(a => a.username === username && a.password === password);
 
-            if (indexNumber && email && password) {
-                users.push({ indexNumber, email, suggestions: [] });
-                alert(`Welcome, ${indexNumber}!`);
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('suggestionForm').style.display = 'block';
-                document.getElementById('userSuggestions').style.display = 'block';
+            if (admin) {
+                currentUser = admin;
+                if (admin.role === "SuperAdmin") {
+                    showPage('superAdmin');
+                } else {
+                    showPage('admin');
+                }
             } else {
-                alert('Please fill in all fields.');
+                alert("Invalid login!");
             }
         }
 
-        // Submit Suggestion
-        function submitSuggestion() {
-            const suggestionText = document.getElementById('suggestion').value;
-            if (suggestionText) {
-                const user = users[users.length - 1];
-                user.suggestions.push(suggestionText);
-                updateUserSuggestions(user.suggestions);
-                alert('Thank you for your suggestion!');
-                document.getElementById('suggestion').value = '';
-            } else {
-                alert('Please write a suggestion.');
-            }
-        }
-
-        function updateUserSuggestions(userSuggestions) {
-            const list = document.getElementById('userSuggestionsList');
-            list.innerHTML = '';
-            if (userSuggestions.length === 0) {
-                list.innerHTML = '<p>No suggestions yet.</p>';
-            } else {
-                userSuggestions.forEach((text, index) => {
-                    const suggestionItem = document.createElement('p');
-                    suggestionItem.textContent = `${index + 1}. ${text}`;
-                    list.appendChild(suggestionItem);
-                });
-            }
-        }
-
-        // Admin View
-        function showAdmin() {
-            const password = prompt("Enter admin password:");
-            if (password === "admin123") {
-                document.getElementById('adminView').style.display = 'block';
-                displaySuggestions();
-            } else {
-                alert("Access denied.");
-            }
+        // Admin and Super Admin Functions
+        function manageAdmins() {
+            alert("Super Admin: Managing Admins!");
         }
 
         function displaySuggestions() {
-            const adminSuggestions = document.getElementById('adminSuggestions');
-            adminSuggestions.innerHTML = '';
-            users.forEach(user => {
-                user.suggestions.forEach((text, index) => {
-                    const suggestionItem = document.createElement('p');
+            // For pagination and suggestions
+        }
+    </script>
+</body>
+</html>
